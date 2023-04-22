@@ -8,7 +8,7 @@ class Block(pg.sprite.Sprite):
         self.pos = vec(pos) + INIT_POS
         super().__init__(tetrisShapes.tetris_two.sprite_group)
         self.image = pg.Surface([TILE_SIZE, TILE_SIZE]) ## Sets the sprite to be the size of a tile
-        self.image.fill('red') ##Change later to match sprite
+        pg.draw.rect(self.image, 'red', (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius = 8) ##Change later to match sprite
         self.rect = self.image.get_rect()
 
     ## Rotates a block 90 degrees
