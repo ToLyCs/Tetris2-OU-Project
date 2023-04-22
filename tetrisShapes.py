@@ -45,6 +45,7 @@ class TetShape:
         self.tetris_two = tetris_two
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
 
+        ## Chooses shape color based off the shape
         if self.shape == 'I':
             self.image = tetris_two.app.images[0]
         elif self.shape == 'J':
