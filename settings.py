@@ -4,9 +4,13 @@
 import pygame as pg
 
 vec = pg.math.Vector2
+
+## Set tile size and playing field dimensions
 TILE_SIZE = 35
 FIELD_SIZE = FIELD_W, FIELD_H = 10,20
 FIELD_RES = FIELD_W * TILE_SIZE, FIELD_H * TILE_SIZE
+
+## Set Frames Per Second and the backfround field color
 FPS = 60
 FIELD_COLOR = (50, 143, 168)
 
@@ -21,5 +25,5 @@ TETRISBLOCK = {
     'Z' : [(0, 0), (1, 0), (0, -1), (-1, -1)]
 }
 
-
+## Sets vector to the center of the playing field
 INIT_POS = vec(FIELD_SIZE) // 2 ##Integer division

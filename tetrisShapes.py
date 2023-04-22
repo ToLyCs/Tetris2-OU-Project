@@ -7,7 +7,7 @@ class Block(pg.sprite.Sprite):
         self.tetrisShapes = tetrisShapes
         self.pos = vec(pos) + INIT_POS
         super().__init__(tetrisShapes.tetris_two.sprite_group)
-        self.image = pg.Surface([TILE_SIZE, TILE_SIZE])
+        self.image = pg.Surface([TILE_SIZE, TILE_SIZE]) ## Sets the sprite to be the size of a tile
         self.image.fill('red') ##Change later to match sprite
         self.rect = self.image.get_rect()
         ##The position is based from the top left of the board
@@ -16,7 +16,7 @@ class Block(pg.sprite.Sprite):
 class TetShape:
     def __init__(self, tetris_two):
         self.tetris_two = tetris_two
-        self.shape = random.choice(list(TETRISBLOCK.keys()))
+        self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
     
     def update(self):
