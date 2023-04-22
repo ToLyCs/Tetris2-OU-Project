@@ -18,18 +18,36 @@ class Block(pg.sprite.Sprite):
     def update(self):
         self.set_pos()
 
+    ## Checks to see if a given block in a shape collided with the wall of playing field. Returns true if did collide
+    def block_collide(self, pos):
+        x = int(pos.x)
+        y = int(pos.y)
+
+        if 0 <= x < FIELD_W and y < FIELD_H:
+            return False
+        
+        return True
+
 class TetShape:
     def __init__(self, tetris_two):
         self.tetris_two = tetris_two
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
 
+    ## Checks to see if the whole shape collided with the end of playing field. Returns true if it did collide
+    def shape_collide(self, block_positions):
+        return any(map(Block.block_collide, self.blocks, block_positions))
+
+    ## Moves block in direction given
     def move(self, dir):
         direction = DIRECTIONS[dir] ## Sets to a direction
+        new_block_positions = [block.pos + direction for block in self.blocks] ## Gets the positions of the block after it moves
+        collision = self.shape_collide(new_block_positions)
 
-        ## Adds the direction to the vector
-        for block in self.blocks:
-            block.pos += direction
-    
+        ## If the shape did not collide with the wall, move the block
+        if not collision:
+            for block in self.blocks: ## Adds the direction to the vector
+                block.pos += direction
+        
     def update(self):
         self.move(dir='down')
