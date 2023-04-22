@@ -7,6 +7,11 @@ class Tetris:
         self.sprite_group = pg.sprite.Group() ## Add sprites
         self.tetrisShapes = TetShape(self)
 
+    ## If current shape has landed, create a new shape
+    def has_landed(self):
+        if self.tetrisShapes.landed:
+            self.tetrisShapes = TetShape(self)
+
     ## Checks to see if the elft or right arrow key is pressed, if they are, set direction to left or right
     def controller(self, pressed_key):
         if pressed_key == pg.K_LEFT:
@@ -25,6 +30,7 @@ class Tetris:
     def update(self):
         if self.app.animation_trigger:
             self.tetrisShapes.update()
+            self.has_landed()
         self.sprite_group.update()
 
     ## Draws the grid and sprites

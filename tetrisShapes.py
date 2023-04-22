@@ -33,6 +33,7 @@ class TetShape:
         self.tetris_two = tetris_two
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
+        self.landed = False
 
     ## Checks to see if the whole shape collided with the end of playing field. Returns true if it did collide
     def shape_collide(self, block_positions):
@@ -48,6 +49,8 @@ class TetShape:
         if not collision:
             for block in self.blocks: ## Adds the direction to the vector
                 block.pos += direction
+        elif dir=='down': ## Checks to see if the shape is constantly colliding and only moving downward
+            self.landed = True
         
     def update(self):
         self.move(dir='down')
