@@ -5,6 +5,8 @@ import pygame as pg
 
 vec = pg.math.Vector2
 
+SPRITE_PATH = 'sprites'
+
 ## Set tile size and playing field dimensions
 TILE_SIZE = 35
 FIELD_SIZE = FIELD_W, FIELD_H = 10,20

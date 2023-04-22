@@ -9,8 +9,7 @@ class Block(pg.sprite.Sprite):
         self.alive = True
 
         super().__init__(tetrisShapes.tetris_two.sprite_group)
-        self.image = pg.Surface([TILE_SIZE, TILE_SIZE]) ## Sets the sprite to be the size of a tile
-        pg.draw.rect(self.image, 'red', (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius = 8) ##Change later to match sprite
+        self.image = tetrisShapes.image
         self.rect = self.image.get_rect()
 
     def is_alive(self):
@@ -45,6 +44,22 @@ class TetShape:
     def __init__(self, tetris_two):
         self.tetris_two = tetris_two
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
+
+        if self.shape == 'I':
+            self.image = tetris_two.app.images[0]
+        elif self.shape == 'J':
+            self.image = tetris_two.app.images[1]
+        elif self.shape == 'L':
+            self.image = tetris_two.app.images[2]
+        elif self.shape == 'O':
+            self.image = tetris_two.app.images[3]
+        elif self.shape == 'S':
+            self.image = tetris_two.app.images[4]
+        elif self.shape == 'T':
+            self.image = tetris_two.app.images[5]
+        elif self.shape == 'Z':
+            self.image = tetris_two.app.images[6]
+
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
         self.landed = False
 

@@ -1,6 +1,7 @@
 from settings import * ##import everything from settings.py
 from tetris_two import Tetris
 import sys
+import pathlib
 
 ##Tetrace: have two players race to complete a row on the same board
 
@@ -11,7 +12,15 @@ class App:
         self.screen = pg.display.set_mode(FIELD_RES) ## Make screen with given field resolution in settings
         self.clock = pg.time.Clock()
         self.set_timer()
+        self.images = self.load_images()
         self.tetris_two = Tetris(self)
+
+    ## Loads the images and sizes them to TILE_SIZE
+    def load_images(self):
+        files = [item for item in pathlib.Path(SPRITE_PATH).rglob('*.png') if item.is_file()]
+        images = [pg.image.load(file).convert_alpha() for file in files]
+        images = [pg.transform.scale(image, (TILE_SIZE, TILE_SIZE)) for image in images]
+        return images
 
     ## Sets timer to ANIMATION_INTERVAL
     def set_timer(self):
