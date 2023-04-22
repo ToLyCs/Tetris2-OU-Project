@@ -18,12 +18,12 @@ class Block(pg.sprite.Sprite):
     def update(self):
         self.set_pos()
 
-    ## Checks to see if a given block in a shape collided with the wall of playing field. Returns true if did collide
+    ## Checks to see if a given block in a shape collided with the wall of playing field or another shape. Returns true if did collide
     def block_collide(self, pos):
         x = int(pos.x)
         y = int(pos.y)
 
-        if 0 <= x < FIELD_W and y < FIELD_H:
+        if 0 <= x < FIELD_W and y < FIELD_H and (y < 0 or not self.tetrisShapes.tetris_two.field_array[y][x]):
             return False
         
         return True

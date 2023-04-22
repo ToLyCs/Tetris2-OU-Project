@@ -5,11 +5,24 @@ class Tetris:
     def __init__(self, app):
         self.app = app
         self.sprite_group = pg.sprite.Group() ## Add sprites
+        self.field_array = self.get_field_array()
         self.tetrisShapes = TetShape(self)
 
-    ## If current shape has landed, create a new shape
+    ## Fills 2D array where current shapes have landed
+    def put_shapes_in_array(self):
+        for block in self.tetrisShapes.blocks:
+            x = int(block.pos.x)
+            y = int(block.pos.y)
+            self.field_array[y][x] = block
+
+    ## 2D array filled with 0's that is the size of the playing field 
+    def get_field_array(self):
+        return [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
+
+    ## If current shape has landed, create a new shape and place where it landed in 2D array
     def has_landed(self):
         if self.tetrisShapes.landed:
+            self.put_shapes_in_array()
             self.tetrisShapes = TetShape(self)
 
     ## Checks to see if the elft or right arrow key is pressed, if they are, set direction to left or right
