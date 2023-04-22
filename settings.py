@@ -15,7 +15,7 @@ FPS = 60
 FIELD_COLOR = (45, 45, 45)
 
 ## Time interval (in ms) between animations
-ANIMATION_INTERVAL = 500
+ANIMATION_INTERVAL = 150
 
 INIT_POS = vec(FIELD_W // 2 - 1, 0) ## Sets vector to the center top of the playing field
 DIRECTIONS = {'left': vec(-1, 0), 'right': (1,0), 'down': (0,1)} ## Sets directions in vector values

@@ -8,6 +8,23 @@ class Tetris:
         self.field_array = self.get_field_array()
         self.tetrisShapes = TetShape(self)
 
+    def check_full_row(self):
+        row = FIELD_H - 1
+
+        for y in range(FIELD_H - 1, -1, - 1):
+            for x in range(FIELD_W):
+                self.field_array[row][x] = self.field_array[y][x]
+
+                if self.field_array[y][x]:
+                    self.field_array[row][x].pos = vec(x, y)
+            
+            if sum(map(bool, self.field_array[y])) < FIELD_W:
+                row -= 1
+            else:
+                for x in range(FIELD_W):
+                    self.field_array[row][x].alive = False
+                    self.field_array[row][x] = 0
+
     ## Fills 2D array where current shapes have landed
     def put_shapes_in_array(self):
         for block in self.tetrisShapes.blocks:
@@ -44,6 +61,7 @@ class Tetris:
     ## Updates shapes and sprites
     def update(self):
         if self.app.animation_trigger:
+            self.check_full_row()
             self.tetrisShapes.update()
             self.has_landed()
         self.sprite_group.update()

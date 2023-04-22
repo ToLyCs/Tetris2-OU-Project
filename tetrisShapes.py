@@ -6,10 +6,16 @@ class Block(pg.sprite.Sprite):
     def __init__(self, tetrisShapes, pos):
         self.tetrisShapes = tetrisShapes
         self.pos = vec(pos) + INIT_POS
+        self.alive = True
+
         super().__init__(tetrisShapes.tetris_two.sprite_group)
         self.image = pg.Surface([TILE_SIZE, TILE_SIZE]) ## Sets the sprite to be the size of a tile
         pg.draw.rect(self.image, 'red', (1, 1, TILE_SIZE - 2, TILE_SIZE - 2), border_radius = 8) ##Change later to match sprite
         self.rect = self.image.get_rect()
+
+    def is_alive(self):
+        if not self.alive:
+            self.kill()
 
     ## Rotates a block 90 degrees
     def rotate(self, pivot_pos):
@@ -22,6 +28,7 @@ class Block(pg.sprite.Sprite):
         self.rect.topleft = self.pos * TILE_SIZE
 
     def update(self):
+        self.is_alive()
         self.set_pos()
 
     ## Checks to see if a given block in a shape collided with the wall of playing field or another shape. Returns true if did collide
