@@ -11,6 +11,12 @@ class Block(pg.sprite.Sprite):
         self.image.fill('red') ##Change later to match sprite
         self.rect = self.image.get_rect()
 
+    ## Rotates a block 90 degrees
+    def rotate(self, pivot_pos):
+        translate = self.pos - pivot_pos
+        rotate = translate.rotate(90)
+        return rotate + pivot_pos
+
     ## The position is based from the top left of the board
     def set_pos(self):
         self.rect.topleft = self.pos * TILE_SIZE
@@ -34,6 +40,15 @@ class TetShape:
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
         self.landed = False
+
+    ## Rotates the shape if it will not collide with anything while rotating
+    def rotate(self):
+        pivot_pos = self.blocks[0].pos
+        new_block_positions = [block.rotate(pivot_pos) for block in self.blocks]
+
+        if not self.shape_collide(new_block_positions):
+            for i, block in enumerate(self.blocks):
+                block.pos = new_block_positions[i]
 
     ## Checks to see if the whole shape collided with the end of playing field. Returns true if it did collide
     def shape_collide(self, block_positions):

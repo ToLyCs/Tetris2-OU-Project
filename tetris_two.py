@@ -31,6 +31,8 @@ class Tetris:
             self.tetrisShapes.move(dir='left')
         elif pressed_key == pg.K_RIGHT:
             self.tetrisShapes.move(dir='right')
+        elif pressed_key == pg.K_UP:
+            self.tetrisShapes.rotate()
 
     ## Makes the grid in the display
     def draw_grid(self):
