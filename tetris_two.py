@@ -7,6 +7,7 @@ class Tetris:
         self.sprite_group = pg.sprite.Group() ## Add sprites
         self.field_array = self.get_field_array()
         self.tetrisShapes = TetShape(self)
+        self.fall_speed_up = False
 
     def check_full_row(self):
         row = FIELD_H - 1
@@ -39,10 +40,11 @@ class Tetris:
     ## If current shape has landed, create a new shape and place where it landed in 2D array
     def has_landed(self):
         if self.tetrisShapes.landed:
+            self.fall_speed_up = False
             self.put_shapes_in_array()
             self.tetrisShapes = TetShape(self)
 
-    ## Checks to see if the elft or right arrow key is pressed, if they are, set direction to left or right
+    ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):
         if pressed_key == pg.K_LEFT:
             self.tetrisShapes.move(dir='left')
@@ -50,6 +52,8 @@ class Tetris:
             self.tetrisShapes.move(dir='right')
         elif pressed_key == pg.K_UP:
             self.tetrisShapes.rotate()
+        elif pressed_key == pg.K_DOWN:
+            self.fall_speed_up = True
 
     ## Makes the grid in the display
     def draw_grid(self):
@@ -60,7 +64,9 @@ class Tetris:
 
     ## Updates shapes and sprites
     def update(self):
-        if self.app.animation_trigger:
+        trigger = [self.app.animation_trigger, self.app.fast_animation_trigger][self.fall_speed_up]
+
+        if trigger:
             self.check_full_row()
             self.tetrisShapes.update()
             self.has_landed()
