@@ -1,0 +1,182 @@
+* {
+    font-family: 'roboto', Helvetica, sans-serif;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+body {
+    background-color: #649bc6;
+}
+
+.header {
+    display: flex;
+    background-color: #649bc6; 
+    color: white;
+    font-size: 54px;
+    justify-content: space-around;
+    padding: 10px 0px;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    font-size: 40px;
+    align-items: center;
+    gap: 18px;
+}
+
+.top {
+    background-image: url("img/fixbg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.hero {
+    display: flex;
+    background-color: #181818;
+    
+    justify-content: space-around;
+    color: white;
+    padding: 50px 50px 100px;
+    align-items: center;
+}
+
+.hero-text {
+    display: flex;
+    flex-direction: column;
+    width: 410px;
+    font-size: 18px;
+    color: white;
+}
+
+.hero-info {
+    padding: 15px 0px;
+    font-size: 24px;
+}
+
+.hero-header {
+    font-size: 58px;
+    font-weight: 800;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    color: white;
+}
+
+button {
+    background-color: #3882f6;
+    width: fit-content;
+    color: white;
+    border-radius: 8px;
+    padding: 5px 15px;
+    font-size: medium;
+}
+
+.rand-info {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    margin-bottom: 60px;
+    background-color: #649bc6;
+
+}
+
+.rand-header {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1F2937;
+    padding: 60px;
+}
+
+.rand-info img {
+    border-radius: 8px;
+}
+
+.div-subtopics {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    color: #1F2937
+}
+
+.info {
+    max-width: 225px;
+    font-size: 21px;
+}
+
+.text {
+    font-size: 16px;
+}
+
+.quote-section {
+    background-color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.quote-text {
+    font-style: italic;
+    font-size: 36px;
+    font-weight: lighter;
+    color: #1F2937;
+    width: 500px;
+}
+
+
+.sign-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+}
+
+.blue-portion {
+    display: flex;
+    justify-content: space-around;
+    padding: 30px auto;
+    border-radius: 4px;
+    align-items: center;
+    gap: 100px;
+    padding: 30px 100px ;
+}
+
+
+.main-blue {
+    font-weight: 800;
+    color: #F9FAF8;
+    font-size: 24px;
+}
+
+.blue-subtext {
+    font-size: 18px;
+
+}
+
+.blue-button {
+    height: 32px;
+    width: fit-content;
+}
+
+.footer {
+    background-color: #1F2937;
+    text-align: center;
+    color:#e5e7eb;
+    font-size: 18px;
+    padding: 30px;
+}
+
+.download-btn{
+    background-color: rgb(30, 116, 255);
+    color: white;
+    padding: 0.5rem 2rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+    border-radius:15px;
+}
+
