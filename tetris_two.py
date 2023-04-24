@@ -37,15 +37,24 @@ class Tetris:
     ## 2D array filled with 0's that is the size of the playing field 
     def get_field_array(self):
         return [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
+    
+    ## If shape stays at intial location for 300 miliseconds, return true
+    def game_over(self):
+        if self.tetrisShapes.blocks[0].pos.y == INIT_POS[1]:
+            pg.time.wait(300)
+            return True
 
-    ## If current shape has landed, create a new shape and place where it landed in 2D array
+    ## If current shape has landed, check if game is over or not. If not, make a new shape
     def has_landed(self):
         if self.tetrisShapes.landed:
-            self.fall_speed_up = False
-            self.put_shapes_in_array()
-            self.next_shape.current = True
-            self.tetrisShapes = self.next_shape
-            self.next_shape = TetShape(self, current=False)
+            if self.game_over():
+                self.__init__(self.app)
+            else:
+                self.fall_speed_up = False
+                self.put_shapes_in_array()
+                self.next_shape.current = True
+                self.tetrisShapes = self.next_shape
+                self.next_shape = TetShape(self, current=False)
 
     ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):
