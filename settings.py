@@ -8,6 +8,7 @@ vec = pg.math.Vector2
 SPRITE_PATH = 'assets/sprites'
 FONT_PATH = 'assets/fonts/BrickTetris.ttf'
 BG_MUSIC_PATH = 'assets/music/Tetris.mp3'
+SCORE_PATH = 'score.txt'
 
 ## Set tile size and playing field dimensions
 TILE_SIZE = 45

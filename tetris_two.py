@@ -1,6 +1,7 @@
 from settings import *
 from tetrisShapes import TetShape
 import pygame.freetype as ft
+from score import Score
 
 class Tetris:
     def __init__(self, app):
@@ -14,6 +15,7 @@ class Tetris:
         self.score = 0
         self.full_lines = 0
         self.points_per_line = {0: 0, 1: 100, 2: 200, 3: 400, 4: 800, 5: 1200} ## Dictionary on how much score is gained when completing a line
+        self.score_tracker = Score()
 
     ## Gets the score based on how many lines were compelted at once
     def get_score(self):
@@ -50,10 +52,13 @@ class Tetris:
     def get_field_array(self):
         return [[0 for x in range(FIELD_W)] for y in range(FIELD_H)]
     
-    ## If shape stays at intial location for 300 miliseconds, return true
+    ## If shape stays at intial location for 300 miliseconds, return true and update score.txt
     def game_over(self):
         if self.tetrisShapes.blocks[0].pos.y == INIT_POS[1]:
             pg.time.wait(300)
+            self.score_tracker.write_score(self.score, 'Temp')
+            self.score_tracker.rank_scores()
+            self.score_tracker.remove_duplicates(SCORE_PATH)
             return True
 
     ## If current shape has landed, check if game is over or not. If not, make a new shape
