@@ -1,5 +1,5 @@
 from settings import * ##import everything from settings.py
-from tetris_two import Tetris
+from tetris_two import Tetris, Text
 import sys
 import pathlib
 
@@ -9,11 +9,17 @@ class App:
     def __init__(self):
         pg.init()
         pg.display.set_caption('Tetris2')
-        self.screen = pg.display.set_mode(FIELD_RES) ## Make screen with given field resolution in settings
+        self.screen = pg.display.set_mode(WIN_RES) ## Make screen with given field resolution in settings
         self.clock = pg.time.Clock()
         self.set_timer()
         self.images = self.load_images()
         self.tetris_two = Tetris(self)
+        self.text = Text(self)
+
+        ## Added background music
+        pg.mixer.music.load(BG_MUSIC_PATH)
+        pg.mixer.music.set_volume(0.05)
+        pg.mixer.music.play(-1)
 
     ## Loads the images and sizes them to TILE_SIZE
     def load_images(self):
@@ -40,6 +46,7 @@ class App:
     def draw(self):
         self.screen.fill(color=FIELD_COLOR)
         self.tetris_two.draw()
+        self.text.draw()
         pg.display.flip() ## Update the full display service to screen
 
     ## Checks to keys are pressed
@@ -54,7 +61,7 @@ class App:
             elif event.type == pg.KEYDOWN: ## If any key is pressed, it gets input into the controller method in tetris_two
                 self.tetris_two.controller(pressed_key=event.key) 
             elif event.type == pg.KEYUP: ## If down arow key is released, set fall speed back to normal
-                if event.key == pg.K_DOWN:
+                if event.key == pg.K_DOWN or event.key == pg.K_s:
                     self.tetris_two.fall_speed_up = False
             elif event.type == self.user_event: ## If the event is the ID of user_event, set animation_trigger to True
                 self.animation_trigger = True
