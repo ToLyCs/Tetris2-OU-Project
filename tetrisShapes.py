@@ -6,6 +6,7 @@ class Block(pg.sprite.Sprite):
     def __init__(self, tetrisShapes, pos):
         self.tetrisShapes = tetrisShapes
         self.pos = vec(pos) + INIT_POS
+        self.next_pos = vec(pos) + NEXT_POS_LOCATION
         self.alive = True
 
         super().__init__(tetrisShapes.tetris_two.sprite_group)
@@ -24,7 +25,8 @@ class Block(pg.sprite.Sprite):
 
     ## The position is based from the top left of the board
     def set_pos(self):
-        self.rect.topleft = self.pos * TILE_SIZE
+        pos = [self.next_pos, self.pos][self.tetrisShapes.current]
+        self.rect.topleft = pos * TILE_SIZE
 
     def update(self):
         self.is_alive()
@@ -41,7 +43,7 @@ class Block(pg.sprite.Sprite):
         return True
 
 class TetShape:
-    def __init__(self, tetris_two):
+    def __init__(self, tetris_two, current=True):
         self.tetris_two = tetris_two
         self.shape = random.choice(list(TETRISBLOCK.keys())) ## Grabs a random shape
 
@@ -63,6 +65,7 @@ class TetShape:
 
         self.blocks = [Block(self, pos) for pos in TETRISBLOCK[self.shape]]
         self.landed = False
+        self.current = current
 
     ## Rotates the shape if it will not collide with anything while rotating
     def rotate(self):

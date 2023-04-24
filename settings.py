@@ -8,9 +8,13 @@ vec = pg.math.Vector2
 SPRITE_PATH = 'sprites'
 
 ## Set tile size and playing field dimensions
-TILE_SIZE = 35
+TILE_SIZE = 45
 FIELD_SIZE = FIELD_W, FIELD_H = 10,20
 FIELD_RES = FIELD_W * TILE_SIZE, FIELD_H * TILE_SIZE
+FIELD_PLACE = FIELD_SIZE[0] * 2
+
+## Set window size
+WIN_RES = WIN_W, WIN_H = FIELD_RES[0] * 1.7, FIELD_RES[1]
 
 ## Set Frames Per Second and the backfround field color
 FPS = 60
@@ -21,6 +25,7 @@ ANIMATION_INTERVAL = 500
 FAST_ANIMATION_INTERVAL = 50
 
 INIT_POS = vec(FIELD_W // 2 - 1, 0) ## Sets vector to the center top of the playing field
+NEXT_POS_LOCATION = vec(FIELD_W * 1.3, FIELD_H * 0.4)
 DIRECTIONS = {'left': vec(-1, 0), 'right': (1,0), 'down': (0,1)} ## Sets directions in vector values
 
 ##Here, we have the various block shapes used in tetris

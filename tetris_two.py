@@ -7,6 +7,7 @@ class Tetris:
         self.sprite_group = pg.sprite.Group() ## Add sprites
         self.field_array = self.get_field_array()
         self.tetrisShapes = TetShape(self)
+        self.next_shape = TetShape(self, current=False)
         self.fall_speed_up = False
 
     def check_full_row(self):
@@ -42,7 +43,9 @@ class Tetris:
         if self.tetrisShapes.landed:
             self.fall_speed_up = False
             self.put_shapes_in_array()
-            self.tetrisShapes = TetShape(self)
+            self.next_shape.current = True
+            self.tetrisShapes = self.next_shape
+            self.next_shape = TetShape(self, current=False)
 
     ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):

@@ -9,7 +9,7 @@ class App:
     def __init__(self):
         pg.init()
         pg.display.set_caption('Tetris2')
-        self.screen = pg.display.set_mode(FIELD_RES) ## Make screen with given field resolution in settings
+        self.screen = pg.display.set_mode(WIN_RES) ## Make screen with given field resolution in settings
         self.clock = pg.time.Clock()
         self.set_timer()
         self.images = self.load_images()
