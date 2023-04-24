@@ -16,6 +16,11 @@ class App:
         self.tetris_two = Tetris(self)
         self.text = Text(self)
 
+        ## Added background music
+        pg.mixer.music.load(BG_MUSIC_PATH)
+        pg.mixer.music.set_volume(0.05)
+        pg.mixer.music.play(-1)
+
     ## Loads the images and sizes them to TILE_SIZE
     def load_images(self):
         files = [item for item in pathlib.Path(SPRITE_PATH).rglob('*.png') if item.is_file()]
