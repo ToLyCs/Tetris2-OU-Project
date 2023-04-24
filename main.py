@@ -1,5 +1,6 @@
 from settings import * ##import everything from settings.py
 from tetris_two import Tetris, Text
+from users import * # import everything from users.py
 import sys
 import pathlib
 
