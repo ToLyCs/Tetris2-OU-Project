@@ -57,8 +57,8 @@ class Tetris:
         if self.tetrisShapes.blocks[0].pos.y == INIT_POS[1]:
             pg.time.wait(300)
             self.score_tracker.write_score(self.score, 'Temp')
-            self.score_tracker.rank_scores()
             self.score_tracker.remove_duplicates(SCORE_PATH)
+            self.score_tracker.rank_scores()
             return True
 
     ## If current shape has landed, check if game is over or not. If not, make a new shape

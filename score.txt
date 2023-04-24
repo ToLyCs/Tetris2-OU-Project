@@ -1,6 +1,1 @@
-Temp 400
-Temp 100
-Temp 200
-Temp 1900
-Temp 0
 Low 0
