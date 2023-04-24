@@ -197,7 +197,7 @@ while True:
             # Get info button
             elif info_button.collidepoint(event.pos):
                 # Open the website in the default browser
-                webbrowser.open ("https://www.youtube.com")
+                webbrowser.open ("https://group7tetris2.000webhostapp.com/")
 
 
     # Draw login screen
