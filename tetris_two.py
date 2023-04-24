@@ -11,6 +11,15 @@ class Tetris:
         self.next_shape = TetShape(self, current=False)
         self.fall_speed_up = False
 
+        self.score = 0
+        self.full_lines = 0
+        self.points_per_line = {0: 0, 1: 100, 2: 200, 3: 400, 4: 800, 5: 1200} ## Dictionary on how much score is gained when completing a line
+
+    ## Gets the score based on how many lines were compelted at once
+    def get_score(self):
+        self.score += self.points_per_line[self.full_lines]
+        self.full_lines = 0
+
     def check_full_row(self):
         row = FIELD_H - 1
 
@@ -27,6 +36,8 @@ class Tetris:
                 for x in range(FIELD_W):
                     self.field_array[row][x].alive = False
                     self.field_array[row][x] = 0
+
+                self.full_lines += 1
 
     ## Fills 2D array where current shapes have landed
     def put_shapes_in_array(self):
@@ -83,6 +94,7 @@ class Tetris:
             self.check_full_row()
             self.tetrisShapes.update()
             self.has_landed()
+            self.get_score()
         self.sprite_group.update()
 
     ## Draws the grid and sprites
@@ -99,4 +111,4 @@ class Text:
         self.font.render_to(self.app.screen, (WIN_W * 0.615, WIN_H * 0.05), text='TETRIS 2', fgcolor='white', size=TILE_SIZE * 1.5)
         self.font.render_to(self.app.screen, (WIN_W * 0.67, WIN_H * 0.22), text='NEXT:', fgcolor='white', size=TILE_SIZE * 1.6)
         self.font.render_to(self.app.screen, (WIN_W * 0.655, WIN_H * 0.8), text='SCORE:', fgcolor='white', size=TILE_SIZE * 1.6)
-        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * 0.9), text='0000', fgcolor='white', size=TILE_SIZE * 1.6)
+        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * 0.9), text=f'{self.app.tetris_two.score}', fgcolor='white', size=TILE_SIZE * 1.6)
