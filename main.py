@@ -1,5 +1,5 @@
 from settings import * ##import everything from settings.py
-from tetris_two import Tetris
+from tetris_two import Tetris, Text
 import sys
 import pathlib
 
@@ -14,6 +14,7 @@ class App:
         self.set_timer()
         self.images = self.load_images()
         self.tetris_two = Tetris(self)
+        self.text = Text(self)
 
     ## Loads the images and sizes them to TILE_SIZE
     def load_images(self):
@@ -40,6 +41,7 @@ class App:
     def draw(self):
         self.screen.fill(color=FIELD_COLOR)
         self.tetris_two.draw()
+        self.text.draw()
         pg.display.flip() ## Update the full display service to screen
 
     ## Checks to keys are pressed

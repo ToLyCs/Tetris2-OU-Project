@@ -1,5 +1,6 @@
 from settings import *
 from tetrisShapes import TetShape
+import pygame.freetype as ft
 
 class Tetris:
     def __init__(self, app):
@@ -88,3 +89,14 @@ class Tetris:
     def draw(self):
         self.draw_grid()
         self.sprite_group.draw(self.app.screen)
+
+class Text:
+    def __init__(self, app):
+        self.app = app
+        self.font = ft.Font(FONT_PATH)
+    
+    def draw(self):
+        self.font.render_to(self.app.screen, (WIN_W * 0.615, WIN_H * 0.05), text='TETRIS 2', fgcolor='white', size=TILE_SIZE * 1.5)
+        self.font.render_to(self.app.screen, (WIN_W * 0.67, WIN_H * 0.22), text='NEXT:', fgcolor='white', size=TILE_SIZE * 1.6)
+        self.font.render_to(self.app.screen, (WIN_W * 0.655, WIN_H * 0.8), text='SCORE:', fgcolor='white', size=TILE_SIZE * 1.6)
+        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * 0.9), text='0000', fgcolor='white', size=TILE_SIZE * 1.6)

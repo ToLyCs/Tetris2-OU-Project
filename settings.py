@@ -5,7 +5,8 @@ import pygame as pg
 
 vec = pg.math.Vector2
 
-SPRITE_PATH = 'sprites'
+SPRITE_PATH = 'assets/sprites'
+FONT_PATH = 'assets/fonts/BrickTetris.ttf'
 
 ## Set tile size and playing field dimensions
 TILE_SIZE = 45
