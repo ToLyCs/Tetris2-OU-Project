@@ -75,13 +75,13 @@ class Tetris:
 
     ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):
-        if pressed_key == pg.K_LEFT:
+        if pressed_key == pg.K_LEFT or pressed_key == pg.K_a:
             self.tetrisShapes.move(dir='left')
-        elif pressed_key == pg.K_RIGHT:
+        elif pressed_key == pg.K_RIGHT or pressed_key == pg.K_d:
             self.tetrisShapes.move(dir='right')
-        elif pressed_key == pg.K_UP:
+        elif pressed_key == pg.K_UP or pressed_key == pg.K_w:
             self.tetrisShapes.rotate()
-        elif pressed_key == pg.K_DOWN:
+        elif pressed_key == pg.K_DOWN or pressed_key == pg.K_s:
             self.fall_speed_up = True
 
     ## Makes the grid in the display

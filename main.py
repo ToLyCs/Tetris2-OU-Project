@@ -61,7 +61,7 @@ class App:
             elif event.type == pg.KEYDOWN: ## If any key is pressed, it gets input into the controller method in tetris_two
                 self.tetris_two.controller(pressed_key=event.key) 
             elif event.type == pg.KEYUP: ## If down arow key is released, set fall speed back to normal
-                if event.key == pg.K_DOWN:
+                if event.key == pg.K_DOWN or event.key == pg.K_s:
                     self.tetris_two.fall_speed_up = False
             elif event.type == self.user_event: ## If the event is the ID of user_event, set animation_trigger to True
                 self.animation_trigger = True
