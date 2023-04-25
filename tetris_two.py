@@ -12,16 +12,25 @@ class Tetris:
         self.next_shape = TetShape(self, current=False)
         self.fall_speed_up = False
 
-        self.score = 0
+        self.player_one_score = 0
+        self.player_two_score = 0
         self.full_lines = 0
         self.points_per_line = {0: 0, 1: 100, 2: 200, 3: 400, 4: 800, 5: 1200} ## Dictionary on how much score is gained when completing a line
         self.score_tracker = Score()
 
-    ## Gets the score based on how many lines were compelted at once
-    def get_score(self):
-        self.score += self.points_per_line[self.full_lines]
-        self.full_lines = 0
+        self.player_one_turn = True
+        self.first_turn = True
 
+    ## Gets the score based on how many lines were compelted at once, and gives it to thhe correct player
+    def get_score(self):
+        if not self.app.tetris_two.player_one_turn: ## Give score to player two
+            self.player_one_score += self.points_per_line[self.full_lines]
+            self.full_lines = 0
+        else: ## Give score to player 1
+            self.player_two_score += self.points_per_line[self.full_lines]
+            self.full_lines = 0
+
+    ## Chelc to see if the row is full
     def check_full_row(self):
         row = FIELD_H - 1
 
@@ -56,12 +65,19 @@ class Tetris:
     def game_over(self):
         if self.tetrisShapes.blocks[0].pos.y == INIT_POS[1]:
             pg.time.wait(300)
-            self.score_tracker.write_score(self.score, 'Temp')
-            self.score_tracker.rank_scores()
+            
+            if self.player_one_score > self.player_two_score:
+                self.score_tracker.write_score(self.player_one_score, 'Player1')
+            elif self.player_one_score < self.player_two_score:
+                self.score_tracker.write_score(self.player_two_score, 'Player2')
+            else:
+                self.score_tracker.write_score(self.player_one_score, 'Tie')
+
             self.score_tracker.remove_duplicates(SCORE_PATH)
+            self.score_tracker.rank_scores()
             return True
 
-    ## If current shape has landed, check if game is over or not. If not, make a new shape
+    ## If current shape has landed, check if game is over or not. If not, make a new shape and change turns
     def has_landed(self):
         if self.tetrisShapes.landed:
             if self.game_over():
@@ -72,16 +88,18 @@ class Tetris:
                 self.next_shape.current = True
                 self.tetrisShapes = self.next_shape
                 self.next_shape = TetShape(self, current=False)
+                self.player_one_turn = not self.player_one_turn
+                self.first_turn = False
 
     ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):
-        if pressed_key == pg.K_LEFT or pressed_key == pg.K_a:
+        if (pressed_key == pg.K_LEFT and self.player_one_turn) or (pressed_key == pg.K_a and not self.player_one_turn):
             self.tetrisShapes.move(dir='left')
-        elif pressed_key == pg.K_RIGHT or pressed_key == pg.K_d:
+        elif (pressed_key == pg.K_RIGHT and self.player_one_turn) or (pressed_key == pg.K_d and not self.player_one_turn):
             self.tetrisShapes.move(dir='right')
-        elif pressed_key == pg.K_UP or pressed_key == pg.K_w:
+        elif (pressed_key == pg.K_UP and self.player_one_turn) or (pressed_key == pg.K_w and not self.player_one_turn):
             self.tetrisShapes.rotate()
-        elif pressed_key == pg.K_DOWN or pressed_key == pg.K_s:
+        elif (pressed_key == pg.K_DOWN and self.player_one_turn) or (pressed_key == pg.K_s and not self.player_one_turn):
             self.fall_speed_up = True
 
     ## Makes the grid in the display
@@ -112,8 +130,11 @@ class Text:
         self.app = app
         self.font = ft.Font(FONT_PATH)
     
+    ## GUI (score display, game anme display, etc.)
     def draw(self):
         self.font.render_to(self.app.screen, (WIN_W * 0.615, WIN_H * 0.05), text='TETRIS 2', fgcolor='white', size=TILE_SIZE * 1.5)
         self.font.render_to(self.app.screen, (WIN_W * 0.67, WIN_H * 0.22), text='NEXT:', fgcolor='white', size=TILE_SIZE * 1.6)
-        self.font.render_to(self.app.screen, (WIN_W * 0.655, WIN_H * 0.8), text='SCORE:', fgcolor='white', size=TILE_SIZE * 1.6)
-        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * 0.9), text=f'{self.app.tetris_two.score}', fgcolor='white', size=TILE_SIZE * 1.6)
+        self.font.render_to(self.app.screen, (WIN_W * 0.63, WIN_H * 0.6), text='PLAYER 1:', fgcolor='red', size=TILE_SIZE * 1.3)
+        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * 0.7), text=f'{self.app.tetris_two.player_one_score}', fgcolor='white', size=TILE_SIZE * 1.6)
+        self.font.render_to(self.app.screen, (WIN_W * 0.63, WIN_H * 0.8), text='PLAYER 2:', fgcolor='blue', size=TILE_SIZE * 1.3)
+        self.font.render_to(self.app.screen, (WIN_W * 0.685, WIN_H * .9), text=f'{self.app.tetris_two.player_two_score}', fgcolor='white', size=TILE_SIZE * 1.6)
