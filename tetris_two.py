@@ -64,7 +64,14 @@ class Tetris:
     def game_over(self):
         if self.tetrisShapes.blocks[0].pos.y == INIT_POS[1]:
             pg.time.wait(300)
-            self.score_tracker.write_score(self.score, 'Temp')
+            
+            if self.player_one_score > self.player_two_score:
+                self.score_tracker.write_score(self.player_one_score, 'Player1')
+            elif self.player_one_score < self.player_two_score:
+                self.score_tracker.write_score(self.player_two_score, 'Player2')
+            else:
+                self.score_tracker.write_score(self.player_one_score, 'Tie')
+
             self.score_tracker.remove_duplicates(SCORE_PATH)
             self.score_tracker.rank_scores()
             return True
@@ -122,6 +129,7 @@ class Text:
         self.app = app
         self.font = ft.Font(FONT_PATH)
     
+    ## GUI
     def draw(self):
         self.font.render_to(self.app.screen, (WIN_W * 0.615, WIN_H * 0.05), text='TETRIS 2', fgcolor='white', size=TILE_SIZE * 1.5)
         self.font.render_to(self.app.screen, (WIN_W * 0.67, WIN_H * 0.22), text='NEXT:', fgcolor='white', size=TILE_SIZE * 1.6)
