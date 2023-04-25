@@ -1,8 +1,9 @@
+from pickle import APPEND
 import pygame
 import sys
 from main import * # import everything from main.py
 import webbrowser
-
+from highscore import *
 class Account:
     def __init__(self):  
         self.username = None
@@ -238,6 +239,7 @@ while True:
         width, height = 600, 400
         screen = pygame.display.set_mode((width, height))
         font = pygame.font.Font(None, 28)
+        pygame.display.set_caption("Option")
 
         # Define the options
         new_game_text = font.render("New Game", True, (255, 255, 255))
@@ -248,7 +250,7 @@ while True:
         new_game_pos = pygame.Rect(width/2 - 80, height/2 - 60, 160, 32)
         high_score_pos = pygame.Rect(width/2 - 80, height/2, 160, 32)
         quit_pos = pygame.Rect(width/2 - 80, height/2 + 60, 160, 32)
-
+         
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -258,13 +260,14 @@ while True:
                     if new_game_pos.collidepoint(event.pos):
                         print("Starting new game...")
                         app = App()
-                        app.run ()
+                        app.run()
                     elif high_score_pos.collidepoint(event.pos):
-                        print("Displaying high score...")
+                        app = highscore()
+                        app.run()
                     elif quit_pos.collidepoint(event.pos):
                         pygame.quit()
                         quit()
-            
+
             # Fill the background color
             screen.fill((0, 0, 0))
             
@@ -277,6 +280,62 @@ while True:
             pygame.draw.rect(screen, (255, 255, 255), new_game_pos, 2)
             pygame.draw.rect(screen, (255, 255, 255), high_score_pos, 2)
             pygame.draw.rect(screen, (255, 255, 255), quit_pos, 2)
-            
+
             # Update the display
             pygame.display.update()
+
+
+    def highscore():
+        pygame.init()
+        clock = pygame.time.Clock()
+
+        # Define colors
+        BLACK = (0, 0, 0)
+        WHITE = (255, 255, 255)
+
+        # Set the window dimensions
+        screen_width = 600
+        screen_height = 400
+        screen = pygame.display.set_mode((screen_width, screen_height))
+        pygame.display.set_caption("High Score")
+
+        # Set the font and font size
+        font = pygame.font.Font(None, 28)
+
+        # Define the Return button        
+        return_button = font.render("Return", True, (155, 255, 255))
+        # Render return button
+        screen.blit(return_button, (20, 20)) 
+        return_button = pygame.draw.rect(screen, (255, 255, 255), (10, 10, 80, 32), 2) 
+
+        # Read the scores from the score.txt file
+        scores = []
+        with open('score.txt', 'r') as file:
+            for line in file:
+                scores.append(line.strip())
+
+        # Display the scores on the screen
+        y = 50
+        for score in scores:
+            text = font.render(score, True, WHITE)
+            text_rect = text.get_rect(center=(screen_width/2, y))
+            screen.blit(text, text_rect)
+            y += 50
+
+        # Main loop
+        while True:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    quit()
+
+                # Return button mouse click
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if return_button.collidepoint(event.pos):
+                        return option() 
+
+            # Update the screen
+            pygame.display.update()
+            clock.tick(60)
+
+   
