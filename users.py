@@ -22,6 +22,10 @@ class Account:
         username_text = font.render("Username: ", True, (255, 255, 255))
         password_text = font.render("Password: ", True, (255, 255, 255))
         create_text = font.render("Create account", True, (155, 255, 255))
+
+        # Define the Return button        
+        return_button = font.render("Return", True, (155, 255, 255))
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -50,6 +54,10 @@ class Account:
                             username += event.unicode
                         elif b.collidepoint(pygame.mouse.get_pos()):
                             password += event.unicode
+                # Return button mouse click
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if c.collidepoint(event.pos):
+                        return Account()
             
             # Fill the background color
             screen.fill((0, 0, 0))
@@ -64,8 +72,11 @@ class Account:
             password_input = font.render("*" * len(password), True, (255, 255, 155))
             screen.blit(username_input, (width/2 - 80, height/2 - 60))
             screen.blit(password_input, (width/2 - 80, height/2 ))
+            # Render return button
+            screen.blit(return_button, (20, 20)) 
+            c = pygame.draw.rect(screen, (255, 255, 255), (10, 10, 80, 32), 2) 
             # Update display
-            pygame.display.flip()
+            pygame.display.update()
 
     
     def login(self):
@@ -86,7 +97,10 @@ class Account:
         # Display when Invalid username or password
         error_text = font.render("Invalid username or password.", True, (255, 0, 0))
         error = False
-        
+
+        # Define the Return button        
+        return_button = font.render("Return", True, (155, 255, 255))
+
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -119,7 +133,10 @@ class Account:
                             username += event.unicode
                         elif b.collidepoint(pygame.mouse.get_pos()):
                             password += event.unicode
-                        
+                # Return button mouse click                
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    if c.collidepoint(event.pos):
+                        return Account()                        
             # Fill the background color
             screen.fill((0, 0, 0))
             
@@ -133,12 +150,13 @@ class Account:
             username_input = font.render(username, True, (255, 255, 255))
             password_input = font.render("*" * len(password), True, (255, 255, 155))
             screen.blit(username_input, (width/2 - 80, height/2 - 60))
-            screen.blit(password_input, (width/2 - 80, height/2 ))
-            
+            screen.blit(password_input, (width/2 - 80, height/2 ))       
             # Display error message if login fails
             if error:
                 screen.blit(error_text, (width/2 - 140, height/2 + 40))
-    
+            # Return button
+            screen.blit(return_button, (20, 20)) 
+            c = pygame.draw.rect(screen, (255, 255, 255), (10, 10, 80, 32), 2)     
             # Update the display
             pygame.display.update()
 
