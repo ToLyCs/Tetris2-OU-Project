@@ -17,6 +17,8 @@ class Tetris:
         self.points_per_line = {0: 0, 1: 100, 2: 200, 3: 400, 4: 800, 5: 1200} ## Dictionary on how much score is gained when completing a line
         self.score_tracker = Score()
 
+        self.player_one_turn = True
+
     ## Gets the score based on how many lines were compelted at once
     def get_score(self):
         self.score += self.points_per_line[self.full_lines]
@@ -72,16 +74,17 @@ class Tetris:
                 self.next_shape.current = True
                 self.tetrisShapes = self.next_shape
                 self.next_shape = TetShape(self, current=False)
+                self.player_one_turn = not self.player_one_turn
 
     ## Checks to see which arrow key is pressed and either moves/rotates it
     def controller(self, pressed_key):
-        if pressed_key == pg.K_LEFT or pressed_key == pg.K_a:
+        if (pressed_key == pg.K_LEFT and self.player_one_turn) or (pressed_key == pg.K_a and not self.player_one_turn):
             self.tetrisShapes.move(dir='left')
-        elif pressed_key == pg.K_RIGHT or pressed_key == pg.K_d:
+        elif (pressed_key == pg.K_RIGHT and self.player_one_turn) or (pressed_key == pg.K_d and not self.player_one_turn):
             self.tetrisShapes.move(dir='right')
-        elif pressed_key == pg.K_UP or pressed_key == pg.K_w:
+        elif (pressed_key == pg.K_UP and self.player_one_turn) or (pressed_key == pg.K_w and not self.player_one_turn):
             self.tetrisShapes.rotate()
-        elif pressed_key == pg.K_DOWN or pressed_key == pg.K_s:
+        elif (pressed_key == pg.K_DOWN and self.player_one_turn) or (pressed_key == pg.K_s and not self.player_one_turn):
             self.fall_speed_up = True
 
     ## Makes the grid in the display
