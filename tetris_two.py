@@ -67,9 +67,9 @@ class Tetris:
             pg.time.wait(300)
             
             if self.player_one_score > self.player_two_score:
-                self.score_tracker.write_score(self.player_one_score, 'Player1')
+                self.score_tracker.write_score(self.player_one_score, 'PlayerOne')
             elif self.player_one_score < self.player_two_score:
-                self.score_tracker.write_score(self.player_two_score, 'Player2')
+                self.score_tracker.write_score(self.player_two_score, 'PlayerTwo')
             else:
                 self.score_tracker.write_score(self.player_one_score, 'Tie')
 
