@@ -3,7 +3,7 @@ import pygame
 import sys
 from main import * # import everything from main.py
 import webbrowser
-from highscore import *
+
 class Account:
     def __init__(self):  
         self.username = None
